@@ -23,7 +23,7 @@ function Announcement() {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/dash/dashboardget');
+        const response = await axios.get('https://exam-portal-backend-rekx.onrender.com/dash/dashboardget');
         if (response.data.success) {
           setNotices(response.data.notice);
           console.log
