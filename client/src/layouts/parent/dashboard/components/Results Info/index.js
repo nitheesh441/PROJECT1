@@ -30,7 +30,7 @@ function ResultInfo() {
   useEffect(() => {
     const fetchexam = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/dash/upresults');
+        const response = await axios.get('https://exam-portal-backend-rekx.onrender.com/dash/upresults');
         if (response.data) {
           setNotices(response.data);
          
