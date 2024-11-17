@@ -29,7 +29,6 @@ import Table from "examples/Tables/Table";
 import SoftProgress from "components/SoftProgress";
 
 
-
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -43,6 +42,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function Sresults() {
   const navigate = useNavigate()
@@ -67,7 +67,7 @@ function Sresults() {
 
         const fetchResults = async () => {
           try {
-            const response = await axios.post('http://localhost:8800/results/resultsget', { rollNo });
+            const response = await axios.post(`${API_URL}/results/resultsget`, { rollNo });
 
             const flattenedData = flattenResults(response.data);
             // Flatten the data

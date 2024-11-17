@@ -30,7 +30,7 @@ import SoftButton from 'components/SoftButton';
 import Swal from 'sweetalert2';
 import {Modal, TextareaAutosize } from '@mui/material';
 // Images
-
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function Announcement() {
 
@@ -53,7 +53,7 @@ function Announcement() {
   };
   const fetchAnnouncements = async () => {
     try {
-      const response = await axios.get('http://localhost:8800/dash/dashboardget');
+      const response = await axios.get(`${API_URL}/dash/dashboardget`);
       if (response.data.success) {
         setNotices(response.data.notice);
         console.log
@@ -72,7 +72,7 @@ function Announcement() {
   const handleSave = async () => {
     if (message) {
       try {
-        const response = await axios.post('http://localhost:8800/dash/dashboardpost', { message });
+        const response = await axios.post(`${API_URL}/dash/dashboardpost`, { message });
         if (response.status === 200) {
 
           Swal.fire({

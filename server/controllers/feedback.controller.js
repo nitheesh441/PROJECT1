@@ -15,27 +15,34 @@ const FeedbacksGetController = async (req, res) => {
         res.status(500).json({ error: err.message });
       }
     };
-  const FeedbacksPostController =  async (req, res) => {
-    try {
+    const FeedbacksPostController = async (req, res) => {
+      try {
         const { username, userType, feedbackType, message } = req.body;
     
-      
+        // Check for missing required fields
+        if (!username || !userType || !feedbackType || !message) {
+         
+          return res.status(400).json({ success: false, message: 'All fields are required.' });
+        }
+    
         const newFeedback = new Feedback({
           username,
           userType,
           feedbackType,
           message,
-          date: new Date(), 
+          date: new Date(),
         });
     
-       
-        await newFeedback.save();
+        await newFeedback.save(); // Ensure you await the save operation
     
-        res.status(201).json({ success: true, message: 'Feedback submitted successfully.' });
+        return res.status(201).json({ success: true, message: 'Feedback submitted successfully.' });
       } catch (error) {
-        res.status(500).json({ success: false, message: 'An error occurred while submitting feedback.', error: error.message });
+        console.error('Error:', error);
+        return res.status(500).json({ success: false, message: 'An error occurred while submitting feedback.', error: error.message });
       }
     };
+    
+    
 module.exports = {
     testfeedback,FeedbacksGetController,FeedbacksPostController
     

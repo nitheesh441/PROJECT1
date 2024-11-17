@@ -43,6 +43,7 @@ import brand from "assets/images/logo-ct.png";
 import Sidenav from "examples/Sidenav";
 import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import FullScreenPdfViewer from "./addques";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 
 const Quespaper  = ({ pdfFile }) => {
@@ -71,7 +72,7 @@ const Quespaper  = ({ pdfFile }) => {
   const fetchexam = async () => {
     const fetchActiveSubjects = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/conduct/currentexams");
+        const response = await axios.get(`${API_URL}/conduct/currentexams`);
         // console.log(response.data); // Debug: log the response data
         return response.data;
       } catch (error) {
@@ -83,8 +84,8 @@ const Quespaper  = ({ pdfFile }) => {
       try {
         console.log("called from here", activeSubjects);
         if (activeSubjects.length > 0) {
-          // const response = await axios.post("http://localhost:8800/conduct/attend", activeSub);
-          const response = await axios.post("http://localhost:8800/conduct/attend", activeSub, {
+          // const response = await axios.post("${API_URL}/conduct/attend", activeSub);
+          const response = await axios.post(`${API_URL}/conduct/attend`, activeSub, {
             responseType: 'blob'
           });
           

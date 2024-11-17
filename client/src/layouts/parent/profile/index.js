@@ -57,7 +57,7 @@ import team1 from "assets/images/team-1.jpg";
 import team2 from "assets/images/team-2.jpg";
 
 import team4 from "assets/images/team-4.jpg";
-
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 function PProfile() {
   const navigate = useNavigate()
   const [controller, dispatch] = useSoftUIController();
@@ -95,7 +95,7 @@ function PProfile() {
 
         const fetchProfile = async () => {
           try {
-            const response = await axios.post('http://localhost:8800/student/studentget', { rollNo });
+            const response = await axios.post(`${API_URL}/student/studentget`, { rollNo });
             
             setProfileData(response.data);
           } catch (error) {

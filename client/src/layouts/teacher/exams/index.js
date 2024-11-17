@@ -39,6 +39,8 @@ import brand from "assets/images/logo-ct.png";
 import Sidenav from "examples/Sidenav";
 import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import { useNavigate } from "react-router-dom";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
+
 function TExtable() {
   const navigate = useNavigate();
   const [exams, setExams] = useState([]);
@@ -81,7 +83,7 @@ function TExtable() {
   }, []);
 
   const fetchExams = () => {
-    axios.get('http://localhost:8800/exam/examsgetfac')
+    axios.get(`${API_URL}/exam/examsgetfac`)
       .then(response => {
         setExams(response.data);
         console.log("Fetch");
@@ -92,7 +94,7 @@ function TExtable() {
   };
   const fetchcourseCode = async () => {
     try {
-      const response = await axios.get('http://localhost:8800/course/coursecode');
+      const response = await axios.get(`${API_URL}/course/coursecode`);
       setCourseCodes(response.data);
     } catch (error) {
       console.error('Error fetching courses:', error);
@@ -114,7 +116,7 @@ function TExtable() {
       newSubjects[index]['courseCode'] = courseCode;
       return { ...prevData, subjects: newSubjects };
     });
-    axios.post(`http://localhost:8800/course/subject`, { courseCode })
+    axios.post(`${API_URL}/course/subject`, { courseCode })
       .then(response => {
         setExamData(prevData => {
           const newSubjects = [...prevData.subjects];
@@ -144,7 +146,7 @@ function TExtable() {
         updatedSubject: examData.subjects[0]
       };
 
-      axios.put(`http://localhost:8800/exam/examsubupdate`, updatedSubjectData)
+      axios.put(`${API_URL}/exam/examsubupdate`, updatedSubjectData)
         .then(response => {
           fetchExams();
           setExamData({ examId: '', examName: '', subjects: [{ subjectName: '', courseCode: '', date: '', startTime: '', endTime: '' }] });
@@ -167,7 +169,7 @@ function TExtable() {
         });
     } else {
 
-      axios.post('http://localhost:8800/exam/examspost', examData)
+      axios.post(`${API_URL}/exam/examspost`, examData)
         .then(response => {
 
           fetchExams();
@@ -220,7 +222,7 @@ function TExtable() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          axios.delete('http://localhost:8800/exam/examdelete', { data: { examId } })
+          axios.delete(`${API_URL}/exam/examdelete`, { data: { examId } })
             .then(response => {
               fetchExams();
             })
@@ -256,7 +258,7 @@ function TExtable() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          axios.delete('http://localhost:8800/exam/deletesubject', { data: { examId, subjectId } })
+          axios.delete(`${API_URL}/exam/deletesubject`, { data: { examId, subjectId } })
             .then(response => {
               fetchExams();
               Swal.fire({

@@ -42,6 +42,7 @@ import { sroutes, troutes, proutes } from 'routes';
 import brand from "assets/images/logo-ct.png";
 import Sidenav from "examples/Sidenav";
 import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function PFeedback() {
  
@@ -97,75 +98,67 @@ function PFeedback() {
     }, []);
   
 
-
-  const handleFeedbackSubmit = async (e) => {
-    e.preventDefault();
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      try {
-
-        const decodedToken = jwtDecode(authToken);
-
-
-        const { username, usertype } = decodedToken;
-        const feedbackData = {
-          username,
-          userType: usertype,
-          feedbackType,
-          message: feedbackMessage,
-        };
-        const response = await axios.post(
-          'http://localhost:8800/feedbacks/feedbackspost',feedbackData
-        );
-        console.log(response.data.success);
-     
-
-        if(response.data.success)
-          {
-         
+    const handleFeedbackSubmit = async (e) => {
+      e.preventDefault();
+      const authToken = localStorage.getItem('authToken');
+      if (authToken) {
+        try {
+          const decodedToken = jwtDecode(authToken);
+          const { rollNo, usertype } = decodedToken;
+          console.log(decodedToken);
+          const feedbackData = {
+            username:rollNo,
+            userType: usertype,
+            feedbackType,
+            message: feedbackMessage,
+          };
+          
+          const response = await axios.post(
+            `${API_URL}/feedbacks/feedbackspost`,
+            feedbackData
+          );
+          console.log(response);
+    
+          // Ensure response contains the expected success property
+          if (response.data && response.data.success) {
             Swal.fire({
               title: 'Success!',
               text: 'Feedback submitted successfully!',
               icon: 'success',
               backdrop: false,
-
-              confirmButtonText: 'Ok'
-            })
+              confirmButtonText: 'Ok',
+            });
             setFeedbackType('');
             setFeedbackMessage('');
-            
-
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: response.data.message || 'An error occurred!',
+              icon: 'error',
+              backdrop: false,
+              confirmButtonText: 'Ok',
+            });
           }
-          else{
-            alert('Error!');
-          }
-        
-       
-
-
-
-        
         } catch (error) {
+          // Display just the error message, not the entire error object
           Swal.fire({
             title: 'Error!',
-            text: error,
+            text: error.message || 'An error occurred while submitting feedback.',
             icon: 'error',
             backdrop: false,
-            confirmButtonText: 'Ok'
-          })
+            confirmButtonText: 'Ok',
+          });
         }
       } else {
         Swal.fire({
           title: 'Error!',
-          text: error,
+          text: 'Authentication token not found.',
           icon: 'error',
           backdrop: false,
-          confirmButtonText: 'Ok'
-        })
+          confirmButtonText: 'Ok',
+        });
       }
-    
-   
-  };
+    };
 
 
   return (

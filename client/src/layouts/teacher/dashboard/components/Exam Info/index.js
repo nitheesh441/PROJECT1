@@ -26,12 +26,14 @@ import ivancik from "assets/images/ivancik.jpg";
 import bg1 from "assets/images/bg1.jpg";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+const API_URL = process.env.REACT_APP_SERVER_URL; 
+
 function ExamInfo() {
   const [notices, setNotices] = useState([]);
   useEffect(() => {
     const fetchexam = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/dash/upexam');
+        const response = await axios.get(`${API_URL}/dash/upexam`);
         if (response.data) {
           setNotices(response.data);
          

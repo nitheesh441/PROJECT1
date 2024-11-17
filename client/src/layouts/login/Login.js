@@ -123,16 +123,18 @@ function LoginMain() {
 
 
     try {
-      const res = await fetch(`http://localhost:8800/auth/login`, {
+    
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+      
       const data = await res.json();
       if (data?.success) {
-
+       
         localStorage.setItem('authToken', data.token);
         console.log(data.token);
         

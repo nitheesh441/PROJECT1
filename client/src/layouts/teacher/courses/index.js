@@ -44,6 +44,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
 import SoftInput from "components/SoftInput";
 import SoftButton from "components/SoftButton";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function TCourses() {
 
@@ -58,7 +59,7 @@ function TCourses() {
   }, []);
   const fetchCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:8800/course/courseget');
+      const response = await axios.get(`${API_URL}/course/courseget`);
       setCourses(response.data);
     } catch (error) {
       console.error('Error fetching courses:', error);
@@ -124,7 +125,7 @@ function TCourses() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.post('http://localhost:8800/course/coursedelete', { courseCode });
+          await axios.post(`${API_URL}/course/coursedelete`, { courseCode });
           setCourses(courses.filter(course => course.courseCode !== courseCode));
           Swal.fire({
             title: 'Deleted!',
@@ -179,7 +180,7 @@ function TCourses() {
 
     if (editing) {
       try {
-        const response = await axios.put('http://localhost:8800/course/courseupdate', formData);
+        const response = await axios.put(`${API_URL}/course/courseupdate`, formData);
        
         
         fetchCourses();
@@ -203,7 +204,7 @@ function TCourses() {
     } else {
       try {
 
-        const response = await axios.post('http://localhost:8800/course/courseadd', formData);
+        const response = await axios.post(`${API_URL}/course/courseadd`, formData);
         fetchCourses();
         Swal.fire('Success', 'Course added successfully', 'success');
         setCourses([...courses, response.data]);

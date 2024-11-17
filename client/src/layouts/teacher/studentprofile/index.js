@@ -42,6 +42,7 @@ import SoftAvatar from "components/SoftAvatar";
 import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function Tstudprofile() {
   const [courses, setCourses] = useState([]);
@@ -49,7 +50,7 @@ function Tstudprofile() {
   const navigate = useNavigate()
   useEffect(() => {
     // Fetch courses from backend
-    axios.get('http://localhost:8800/student/studentgetall') // Adjust the endpoint URL as necessary
+    axios.get(`${API_URL}/student/studentgetall`) // Adjust the endpoint URL as necessary
       .then(response => {
         setCourses(response.data);
         setLoading(false);

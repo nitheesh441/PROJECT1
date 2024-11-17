@@ -41,7 +41,7 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
-
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function Ptimetable() {
   const navigate = useNavigate()
@@ -70,7 +70,7 @@ function Ptimetable() {
       navigate('/login');
     }
    
-    axios.get('http://localhost:8800/exam/examsget')
+    axios.get(`${API_URL}/exam/examsget`)
       .then(response => {
         setExams(response.data);
         console.log(response.data)

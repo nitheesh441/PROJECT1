@@ -24,9 +24,10 @@ const { mongoose } = require("mongoose");
 
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL || 'http://localhost:3000', // Use environment variable for frontend URL
     credentials: true, // Enable cookies and other credentials
-  }));
+}));
+
 
 app.use(bodyParser.json())
 
@@ -63,7 +64,11 @@ mongoose.connection.on("connected",()=>
     {
         console.log("MongoDB connected")
     })
-app.listen(8800,()=>{
-    connect()
-    console.log("Connected to server")
-})
+
+    
+    const PORT = process.env.PORT || 8800; // Use environment variable or fallback to 8800
+    app.listen(PORT, () => {
+        connect();
+        console.log(`Server running on port ${PORT}`);
+    });
+    

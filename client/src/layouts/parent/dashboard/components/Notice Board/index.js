@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 
 
@@ -23,7 +23,7 @@ function Announcement() {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/dash/dashboardget');
+        const response = await axios.get(`${API_URL}/dash/dashboardget`);
         if (response.data.success) {
           setNotices(response.data.notice);
           console.log

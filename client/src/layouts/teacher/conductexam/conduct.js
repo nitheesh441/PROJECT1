@@ -38,6 +38,7 @@ import { sroutes, troutes, proutes } from "routes";
 import brand from "assets/images/logo-ct.png";
 import Sidenav from "examples/Sidenav";
 import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function Conduct() {
   const [controller, dispatch] = useSoftUIController();
@@ -77,7 +78,7 @@ function Conduct() {
   const fetchexam = async () => {
     const fetchActiveSubjects = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/conduct/currentexams");
+        const response = await axios.get(`${API_URL}/conduct/currentexams`);
         // console.log(response.data); // Debug: log the response data
         return response.data;
       } catch (error) {
@@ -89,8 +90,8 @@ function Conduct() {
       try {
         console.log("called from here", activeSubjects);
         if (activeSubjects.length > 0) {
-          // const response = await axios.post("http://localhost:8800/conduct/attend", activeSub);
-          const response = await axios.post("http://localhost:8800/conduct/attendurl", activeSub);
+          // const response = await axios.post("${API_URL}/conduct/attend", activeSub);
+          const response = await axios.post(`${API_URL}/conduct/attendurl`, activeSub);
           setActiveExams(response.data);
            const { meetURL, pin } = response.data;
            console.log('Meet URL:', meetURL);
@@ -144,7 +145,7 @@ function Conduct() {
   //       subjects
   //     };
 
-  //     const response = await axios.post('http://localhost:8800/conduct/conductexam', conductData);
+  //     const response = await axios.post('${API_URL}/conduct/conductexam', conductData);
 
   //     if (response.status === 201) {
   //       alert('Exam conducted successfully!');
@@ -183,7 +184,7 @@ function Conduct() {
     });
 
     try {
-      const response = await axios.post("http://localhost:8800/conduct/conductexam", formData, {
+      const response = await axios.post(`${API_URL}/conduct/conductexam`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

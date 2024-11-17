@@ -25,12 +25,14 @@ import SoftTypography from "components/SoftTypography";
 import bg2 from "assets/images/bg2.jpg";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+const API_URL = process.env.REACT_APP_SERVER_URL; 
+
 function ResultInfo() {
   const [notices, setNotices] = useState([]);
   useEffect(() => {
     const fetchexam = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/dash/upresults');
+        const response = await axios.get(`${API_URL}/dash/upresults`);
         if (response.data) {
           setNotices(response.data);
          

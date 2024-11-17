@@ -30,9 +30,11 @@ import bg2 from "assets/images/bg2.jpg";
 function FeedbackInfo() {
   const [feedbacks, setfeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_URL = process.env.REACT_APP_SERVER_URL; 
+
   useEffect(() => {
     // Fetch courses from backend
-    axios.get('http://localhost:8800/feedbacks/feedbacksget') // Adjust the endpoint URL as necessary
+    axios.get(`${API_URL}/feedbacks/feedbacksget`) // Adjust the endpoint URL as necessary
       .then(response => {
         setfeedbacks(response.data);
        

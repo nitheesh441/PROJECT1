@@ -43,6 +43,8 @@ import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf"; 
+const API_URL = process.env.REACT_APP_SERVER_URL; 
+
 
 function Tresults() {
   const navigate = useNavigate()
@@ -91,7 +93,7 @@ function Tresults() {
   }, []);
   const fetchExamNames = async () => {
     try {
-      const response = await axios.get('http://localhost:8800/results/examname');
+      const response = await axios.get(`${API_URL}/results/examname`);
       console.log(response);
       setExamNames(response.data || []);
     } catch (error) {
@@ -108,14 +110,14 @@ function Tresults() {
     setSubjectError('');
 
     try {
-      const response = await axios.get(`http://localhost:8800/timetable/subjects?examName=${selectedExam}`);
+      const response = await axios.get(`${API_URL}/timetable/subjects?examName=${selectedExam}`);
       setCourses(response.data.subjects || []);
     } catch (error) {
       console.error('Error fetching subjects:', error);
     }
 
     try {
-      const response = await axios.get(`http://localhost:8800/results/examresults?examName=${selectedExam}`);
+      const response = await axios.get(`${API_URL}/results/examresults?examName=${selectedExam}`);
       setExamResults(response.data.results || []);
     } catch (error) {
       console.error('Error fetching exam results:', error);
@@ -138,7 +140,7 @@ function Tresults() {
   
   const fetchResults = async () => {
     try {
-      const response = await axios.get('http://localhost:8800/results/resultstudent');
+      const response = await axios.get(`${API_URL}/results/resultstudent`);
      
       setStudents(response.data);
     }  catch (error) {
@@ -173,7 +175,7 @@ function Tresults() {
     console.log(resultData);
 
     try {
-      await axios.post('http://localhost:8800/results/resultspost', resultData);
+      await axios.post(`${API_URL}/results/resultspost`, resultData);
       alert('Results added successfully!');
       setExamName('');
       setSubject('');

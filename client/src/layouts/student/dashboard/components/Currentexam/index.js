@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import { Alert, AlertTitle, Container } from "@mui/material";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 
 
@@ -24,7 +25,7 @@ function Currentexams() {
    
     const fetchActiveSubjects = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/conduct/currentexams');
+        const response = await axios.get(`${API_URL}/conduct/currentexams`);
         console.log(response.data); // Debug: log the response data
         setActiveSubjects(response.data);
       } catch (error) {

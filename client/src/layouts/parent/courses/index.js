@@ -42,6 +42,7 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
+const API_URL = process.env.REACT_APP_SERVER_URL; 
 
 function Pcourses() {
   const [courses, setCourses] = useState([]);
@@ -49,7 +50,8 @@ function Pcourses() {
   const navigate = useNavigate()
   useEffect(() => {
     // Fetch courses from backend
-    axios.get('http://localhost:8800/course/courseget') // Adjust the endpoint URL as necessary
+   
+    axios.get(`${API_URL}/course/courseget`)
       .then(response => {
         setCourses(response.data);
         setLoading(false);
