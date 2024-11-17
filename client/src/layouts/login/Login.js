@@ -123,8 +123,10 @@ function LoginMain() {
 
 
     try {
-    
       const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
+
+  
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",
